@@ -6,45 +6,48 @@
     android:gravity="center">
 
     <LinearLayout
-        android:layout_width="300px"
+        android:layout_width="420px"
+        android:layout_weight="1"
+        android:padding="50px"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="6px" >
+        android:orientation="vertical" >
 		<TextView 
-		    android:layout_width="200px"
+		    android:layout_width="300px"
+		    android:layout_margin="5px"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="菜单"/>
-        <Button
-            android:id="@+id/setting_btn"
-            android:layout_width="200px"
-            android:layout_height="wrap_content"
-            android:background="@drawable/left_btn_style_one_normal"
-            android:gravity="center"
-            android:text="设置"
-            android:textColor="@android:color/white" />
+            android:text="添加好友"/>
+
 
         <EditText
             android:id="@+id/addFri_text"
-            android:layout_width="200px"
+            android:layout_width="300px"
+            android:layout_margin="5px"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="请输入好友ID"
-            android:textColor="@android:color/white"
-            android:visibility="gone" >
+            android:textColor="@android:color/black">
 
             <requestFocus />
         </EditText>
 
         <Button
             android:id="@+id/addFri_btn"
-            android:layout_width="200px"
+            android:layout_width="300px"
+            android:layout_margin="5px"
             android:layout_height="wrap_content"
             android:background="@drawable/left_btn_style_one_normal"
             android:gravity="center"
             android:text="添加好友"
             android:textColor="@android:color/white" />
+        <TextView 
+		    android:layout_width="300px"
+		    android:layout_margin="5px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/user_id"
+            android:text=""
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

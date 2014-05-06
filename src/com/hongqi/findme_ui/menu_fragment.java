@@ -1,5 +1,7 @@
 package com.hongqi.findme_ui;
 
+import com.hongqi.findmeHttp.HttpUtil;
+
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class menu_fragment extends Fragment{
 	
@@ -36,7 +39,6 @@ public class menu_fragment extends Fragment{
 		TextView title = (TextView)getActivity().findViewById(R.id.title);
 		addFriBtn = (Button)getActivity().findViewById(R.id.addFri_btn);
 		addFriText = (EditText)getActivity().findViewById(R.id.addFri_text);
-		title.setText("…Ë÷√");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		framelayout.setLayoutParams(params);
 		framelayout.getBackground().setAlpha(100);;
@@ -55,7 +57,9 @@ public class menu_fragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				addFriText.setVisibility(View.VISIBLE);
+				String friendID = addFriText.getText().toString();
+				TextView uid = (TextView)getActivity().findViewById(R.id.title);
+				Toast.makeText(getActivity(),friendID+ HttpUtil.addFriend(uid.getText().toString(), friendID), Toast.LENGTH_SHORT).show();
 			}
 		});
 		super.onActivityCreated(savedInstanceState);

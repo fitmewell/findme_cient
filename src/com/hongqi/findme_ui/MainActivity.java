@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebChromeClient.CustomViewCallback;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -37,8 +38,7 @@ import android.widget.Toast;
 import android.os.Build;
 
 public class MainActivity extends Activity implements onLoginSuccessListener,ShowTheWay{
-	
-	
+	String username,uid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,11 +46,17 @@ public class MainActivity extends Activity implements onLoginSuccessListener,Sho
 		setContentView(R.layout.activity_main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
 		getFragmentManager().beginTransaction().replace(R.id.active_main,new login_fragment()).commit();
+	
 		
 	}
-
+	public String getUID(){
+		return this.uid;
+	}
+	
 	@Override
 	public void onLoginSuccess(String ui, String uname) {
+		
+		
 		// TODO Auto-generated method stub
 		Toast.makeText(this, ui+"Success"+uname, Toast.LENGTH_LONG).show();
 		friendlist_fragment friendlist = new friendlist_fragment();

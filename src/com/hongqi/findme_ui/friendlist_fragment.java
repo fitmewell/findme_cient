@@ -31,7 +31,7 @@ import android.widget.Toast;
 public class friendlist_fragment extends Fragment{
 	String username,uid;
 	ShowTheWay showTheWay;
-	
+	TextView title;
 	public interface ShowTheWay{
 		public void translateInfo(String username,String friendname,String friendID,String localX,String localY);
 
@@ -68,7 +68,7 @@ public class friendlist_fragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		Button button = (Button)getActivity().findViewById(R.id.back);
-		TextView title = (TextView)getActivity().findViewById(R.id.title);
+		title = (TextView)getActivity().findViewById(R.id.title);
 		ListView listview = (ListView)getActivity().findViewById(R.id.listview);
 		Spinner spinner = (Spinner)getActivity().findViewById(R.id.right_btn);
 		spinner.setVisibility(View.GONE);
@@ -109,6 +109,7 @@ public class friendlist_fragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
+				title.setText(uid);
 				// TODO Auto-generated method stub
 				getFragmentManager().beginTransaction().addToBackStack(null).add(R.id.pop_menu, new menu_fragment()).commit();
 			}
