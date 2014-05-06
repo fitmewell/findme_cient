@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="6px" >
+		<TextView 
+		    android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="菜单"/>
+        <Button
+            android:id="@+id/setting_btn"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_btn_style_one_normal"
+            android:gravity="center"
+            android:text="设置"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/addFri_text"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="请输入好友ID"
+            android:textColor="@android:color/white"
+            android:visibility="gone" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/addFri_btn"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_btn_style_one_normal"
+            android:gravity="center"
+            android:text="添加好友"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>
