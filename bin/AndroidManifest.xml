@@ -58,7 +58,8 @@
         <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="yQQwftOcLfgjp4RlbpupUCKQ" />
         <activity
             android:name="com.hongqi.findme_ui.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

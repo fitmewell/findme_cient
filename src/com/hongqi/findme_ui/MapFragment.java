@@ -65,39 +65,39 @@ import com.hongqi.findmeHttp.getFriendList;
 public class MapFragment extends Fragment {
 	ImageView dingwei;
 
-	// ä¯ÀÀÂ·Ïß½ÚµãÏà¹Ø
-	Button mBtnPre = null;// ÉÏÒ»¸ö½Úµã
-	Button mBtnNext = null;// ÏÂÒ»¸ö½Úµã
+	// æµè§ˆè·¯çº¿èŠ‚ç‚¹ç›¸å…³
+	Button mBtnPre = null;// ä¸Šä¸€ä¸ªèŠ‚ç‚¹
+	Button mBtnNext = null;// ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
 	Button titleBtn;
-	Spinner spinner = null;// ÏÂÀ­²Ëµ¥
+	Spinner spinner = null;// ä¸‹æ‹‰èœå•
 	TextView simpleWay, shortestWay, timelessWay, Title;
 	LinearLayout titlebar;
 
-	int nodeIndex = -2;// ½ÚµãË÷Òı,¹©ä¯ÀÀ½ÚµãÊ±Ê¹ÓÃ
-	MKRoute route = null;// ±£´æ¼İ³µ/²½ĞĞÂ·ÏßÊı¾İµÄ±äÁ¿£¬¹©ä¯ÀÀ½ÚµãÊ±Ê¹ÓÃ
-	TransitOverlay transitOverlay = null;// ±£´æ¹«½»Â·ÏßÍ¼²ãÊı¾İµÄ±äÁ¿£¬¹©ä¯ÀÀ½ÚµãÊ±Ê¹ÓÃ
+	int nodeIndex = -2;// èŠ‚ç‚¹ç´¢å¼•,ä¾›æµè§ˆèŠ‚ç‚¹æ—¶ä½¿ç”¨
+	MKRoute route = null;// ä¿å­˜é©¾è½¦/æ­¥è¡Œè·¯çº¿æ•°æ®çš„å˜é‡ï¼Œä¾›æµè§ˆèŠ‚ç‚¹æ—¶ä½¿ç”¨
+	TransitOverlay transitOverlay = null;// ä¿å­˜å…¬äº¤è·¯çº¿å›¾å±‚æ•°æ®çš„å˜é‡ï¼Œä¾›æµè§ˆèŠ‚ç‚¹æ—¶ä½¿ç”¨
 	RouteOverlay routeOverlay = null;
 	boolean useDefaultIcon = false;
-	int searchType = -1;// ¼ÇÂ¼ËÑË÷µÄÀàĞÍ£¬Çø·Ö¼İ³µ/²½ĞĞºÍ¹«½»
-	private PopupOverlay pop = null;// µ¯³öÅİÅİÍ¼²ã£¬ä¯ÀÀ½ÚµãÊ±Ê¹ÓÃ
-	private TextView popupText = null;// ÅİÅİview
+	int searchType = -1;// è®°å½•æœç´¢çš„ç±»å‹ï¼ŒåŒºåˆ†é©¾è½¦/æ­¥è¡Œå’Œå…¬äº¤
+	private PopupOverlay pop = null;// å¼¹å‡ºæ³¡æ³¡å›¾å±‚ï¼Œæµè§ˆèŠ‚ç‚¹æ—¶ä½¿ç”¨
+	private TextView popupText = null;// æ³¡æ³¡view
 	private View viewCache = null;
 	private MKPlanNode stNode, edNode;
 	private GeoPoint stGeoPoint, edGeoPoint;
 	private MapController mapController;
 	private LocationClient locationClient;
 	private MyLocationListenner myLocationListenner;
-	private static final String[] m = { " ¼İ³µ ", " ²½ĞĞ ", " ¹«½» " };
+	private static final String[] m = { " é©¾è½¦ ", " æ­¥è¡Œ ", " å…¬äº¤ " };
 	private ArrayAdapter<String> adapter;
 	BMapManager bMapManager;
 
 	private String username, friendID, city;
 
-	// µØÍ¼Ïà¹Ø£¬Ê¹ÓÃ¼Ì³ĞMapViewµÄMyRouteMapViewÄ¿µÄÊÇÖØĞ´touchÊÂ¼şÊµÏÖÅİÅİ´¦Àí
-	// Èç¹û²»´¦ÀítouchÊÂ¼ş£¬ÔòÎŞĞè¼Ì³Ğ£¬Ö±½ÓÊ¹ÓÃMapView¼´¿É
-	MapView mMapView = null; // µØÍ¼View
-	// ËÑË÷Ïà¹Ø
-	MKSearch mSearch = null; // ËÑË÷Ä£¿é£¬Ò²¿ÉÈ¥µôµØÍ¼Ä£¿é¶ÀÁ¢Ê¹ÓÃ
+	// åœ°å›¾ç›¸å…³ï¼Œä½¿ç”¨ç»§æ‰¿MapViewçš„MyRouteMapViewç›®çš„æ˜¯é‡å†™touchäº‹ä»¶å®ç°æ³¡æ³¡å¤„ç†
+	// å¦‚æœä¸å¤„ç†touchäº‹ä»¶ï¼Œåˆ™æ— éœ€ç»§æ‰¿ï¼Œç›´æ¥ä½¿ç”¨MapViewå³å¯
+	MapView mMapView = null; // åœ°å›¾View
+	// æœç´¢ç›¸å…³
+	MKSearch mSearch = null; // æœç´¢æ¨¡å—ï¼Œä¹Ÿå¯å»æ‰åœ°å›¾æ¨¡å—ç‹¬ç«‹ä½¿ç”¨
 
 	public void init(String username, String friendname, String friendID,
 			String localX, String localY) {
@@ -135,8 +135,8 @@ public class MapFragment extends Fragment {
 		Title = (TextView) getActivity().findViewById(R.id.title);
 		titleBtn = (Button) getActivity().findViewById(R.id.back);
 		spinner = (Spinner) getActivity().findViewById(R.id.right_btn);
-		Title.setText("µØÍ¼");
-		titleBtn.setText(" ¶¨Î» ");
+		Title.setText("åœ°å›¾");
+		titleBtn.setText(" å®šä½ ");
 		titleBtn.setVisibility(View.VISIBLE);
 
 		mMapView = (MapView) getActivity().findViewById(R.id.bmapView);
@@ -168,29 +168,29 @@ public class MapFragment extends Fragment {
 
 		OnClickListener clickListener = new OnClickListener() {
 			public void onClick(View v) {
-				// ·¢ÆğËÑË÷
+				// å‘èµ·æœç´¢
 				mapController.animateTo(stNode.pt);
 			}
 		};
 		OnClickListener nodeClickListener = new OnClickListener() {
 			public void onClick(View v) {
-				// ä¯ÀÀÂ·Ïß½Úµã
+				// æµè§ˆè·¯çº¿èŠ‚ç‚¹
 				nodeClick(v);
 			}
 		};
 
 		// dingwei.setOnClickListener(clickListener);
 		titleBtn.setOnClickListener(clickListener);
-		// ´´½¨ µ¯³öÅİÅİÍ¼²ã
+		// åˆ›å»º å¼¹å‡ºæ³¡æ³¡å›¾å±‚
 		createPaopao();
 
-		// µØÍ¼µã»÷ÊÂ¼ş´¦Àí
+		// åœ°å›¾ç‚¹å‡»äº‹ä»¶å¤„ç†
 		mMapView.regMapTouchListner(new MKMapTouchListener() {
 
 			@Override
 			public void onMapClick(GeoPoint point) {
-				// ÔÚ´Ë´¦ÀíµØÍ¼µã»÷ÊÂ¼ş
-				// ÏûÒşpop
+				// åœ¨æ­¤å¤„ç†åœ°å›¾ç‚¹å‡»äº‹ä»¶
+				// æ¶ˆéšpop
 				if (pop != null) {
 					pop.hidePop();
 				}
@@ -207,15 +207,15 @@ public class MapFragment extends Fragment {
 			}
 
 		});
-		// ³õÊ¼»¯ËÑË÷Ä£¿é£¬×¢²áÊÂ¼ş¼àÌı
+		// åˆå§‹åŒ–æœç´¢æ¨¡å—ï¼Œæ³¨å†Œäº‹ä»¶ç›‘å¬
 		mSearch = new MKSearch();
 		mSearch.init(bMapManager, new MKSearchListener() {
 
 			public void onGetDrivingRouteResult(MKDrivingRouteResult res,
 					int error) {
-				// Æğµã»òÖÕµãÓĞÆçÒå£¬ĞèÒªÑ¡Ôñ¾ßÌåµÄ³ÇÊĞÁĞ±í»òµØÖ·ÁĞ±í
+				// èµ·ç‚¹æˆ–ç»ˆç‚¹æœ‰æ­§ä¹‰ï¼Œéœ€è¦é€‰æ‹©å…·ä½“çš„åŸå¸‚åˆ—è¡¨æˆ–åœ°å€åˆ—è¡¨
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
-					// ±éÀúËùÓĞµØÖ·
+					// éå†æ‰€æœ‰åœ°å€
 					// ArrayList<MKPoiInfo> stPois =
 					// res.getAddrResult().mStartPoiList;
 					// ArrayList<MKPoiInfo> enPois =
@@ -226,9 +226,9 @@ public class MapFragment extends Fragment {
 					// res.getAddrResult().mEndCityList;
 					return;
 				}
-				// ´íÎóºÅ¿É²Î¿¼MKEventÖĞµÄ¶¨Òå
+				// é”™è¯¯å·å¯å‚è€ƒMKEventä¸­çš„å®šä¹‰
 				if (error != 0 || res == null) {
-					Toast.makeText(getActivity(), "±§Ç¸£¬Î´ÕÒµ½½á¹û",
+					Toast.makeText(getActivity(), "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -237,23 +237,23 @@ public class MapFragment extends Fragment {
 				searchType = 0;
 
 				// routeOverlay = new RouteOverlay(getMyFriend.this, mMapView);
-				// ´Ë´¦½öÕ¹Ê¾Ò»¸ö·½°¸×÷ÎªÊ¾Àı
+				// æ­¤å¤„ä»…å±•ç¤ºä¸€ä¸ªæ–¹æ¡ˆä½œä¸ºç¤ºä¾‹
 				routeOverlay.setData(res.getPlan(0).getRoute(0));
-				// Çå³ıÆäËûÍ¼²ã
+				// æ¸…é™¤å…¶ä»–å›¾å±‚
 				mMapView.getOverlays().clear();
-				// Ìí¼ÓÂ·ÏßÍ¼²ã
+				// æ·»åŠ è·¯çº¿å›¾å±‚
 				mMapView.getOverlays().add(routeOverlay);
-				// Ö´ĞĞË¢ĞÂÊ¹ÉúĞ§
+				// æ‰§è¡Œåˆ·æ–°ä½¿ç”Ÿæ•ˆ
 				mMapView.refresh();
-				// Ê¹ÓÃzoomToSpan()ÕÀ·ÅµØÍ¼£¬Ê¹Â·ÏßÄÜÍêÈ«ÏÔÊ¾ÔÚµØÍ¼ÉÏ
+				// ä½¿ç”¨zoomToSpan()ç»½æ”¾åœ°å›¾ï¼Œä½¿è·¯çº¿èƒ½å®Œå…¨æ˜¾ç¤ºåœ¨åœ°å›¾ä¸Š
 				mMapView.getController().zoomToSpan(
 						routeOverlay.getLatSpanE6(),
 						routeOverlay.getLonSpanE6());
-				// ÒÆ¶¯µØÍ¼µ½Æğµã
+				// ç§»åŠ¨åœ°å›¾åˆ°èµ·ç‚¹
 				mMapView.getController().animateTo(res.getStart().pt);
-				// ½«Â·ÏßÊı¾İ±£´æ¸øÈ«¾Ö±äÁ¿
+				// å°†è·¯çº¿æ•°æ®ä¿å­˜ç»™å…¨å±€å˜é‡
 				route = res.getPlan(0).getRoute(0);
-				// ÖØÖÃÂ·Ïß½ÚµãË÷Òı£¬½Úµãä¯ÀÀÊ±Ê¹ÓÃ
+				// é‡ç½®è·¯çº¿èŠ‚ç‚¹ç´¢å¼•ï¼ŒèŠ‚ç‚¹æµè§ˆæ—¶ä½¿ç”¨
 				// nodeIndex = -1;
 				// mBtnPre.setVisibility(View.VISIBLE);
 				// mBtnNext.setVisibility(View.VISIBLE);
@@ -261,9 +261,9 @@ public class MapFragment extends Fragment {
 
 			public void onGetTransitRouteResult(MKTransitRouteResult res,
 					int error) {
-				// Æğµã»òÖÕµãÓĞÆçÒå£¬ĞèÒªÑ¡Ôñ¾ßÌåµÄ³ÇÊĞÁĞ±í»òµØÖ·ÁĞ±í
+				// èµ·ç‚¹æˆ–ç»ˆç‚¹æœ‰æ­§ä¹‰ï¼Œéœ€è¦é€‰æ‹©å…·ä½“çš„åŸå¸‚åˆ—è¡¨æˆ–åœ°å€åˆ—è¡¨
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
-					// ±éÀúËùÓĞµØÖ·
+					// éå†æ‰€æœ‰åœ°å€
 					ArrayList<MKPoiInfo> stPois = res.getAddrResult().mStartPoiList;
 					ArrayList<MKPoiInfo> enPois = res.getAddrResult().mEndPoiList;
 					ArrayList<MKCityListInfo> stCities = res.getAddrResult().mStartCityList;
@@ -271,36 +271,36 @@ public class MapFragment extends Fragment {
 					return;
 				}
 				if (error != 0 || res == null) {
-					Toast.makeText(getActivity(), "±§Ç¸£¬Î´ÕÒµ½½á¹û",
+					Toast.makeText(getActivity(), "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
 				searchType = 1;
 				transitOverlay = new TransitOverlay(getActivity(), mMapView);
-				// ´Ë´¦½öÕ¹Ê¾Ò»¸ö·½°¸×÷ÎªÊ¾Àı
+				// æ­¤å¤„ä»…å±•ç¤ºä¸€ä¸ªæ–¹æ¡ˆä½œä¸ºç¤ºä¾‹
 				transitOverlay.setData(res.getPlan(0));
-				// Çå³ıÆäËûÍ¼²ã
+				// æ¸…é™¤å…¶ä»–å›¾å±‚
 				mMapView.getOverlays().clear();
-				// Ìí¼ÓÂ·ÏßÍ¼²ã
+				// æ·»åŠ è·¯çº¿å›¾å±‚
 				mMapView.getOverlays().add(transitOverlay);
-				// Ö´ĞĞË¢ĞÂÊ¹ÉúĞ§
+				// æ‰§è¡Œåˆ·æ–°ä½¿ç”Ÿæ•ˆ
 				mMapView.refresh();
-				// Ê¹ÓÃzoomToSpan()ÕÀ·ÅµØÍ¼£¬Ê¹Â·ÏßÄÜÍêÈ«ÏÔÊ¾ÔÚµØÍ¼ÉÏ
+				// ä½¿ç”¨zoomToSpan()ç»½æ”¾åœ°å›¾ï¼Œä½¿è·¯çº¿èƒ½å®Œå…¨æ˜¾ç¤ºåœ¨åœ°å›¾ä¸Š
 				mMapView.getController().zoomToSpan(
 						transitOverlay.getLatSpanE6(),
 						transitOverlay.getLonSpanE6());
-				// ÒÆ¶¯µØÍ¼µ½Æğµã
+				// ç§»åŠ¨åœ°å›¾åˆ°èµ·ç‚¹
 				mMapView.getController().animateTo(res.getStart().pt);
-				// ÖØÖÃÂ·Ïß½ÚµãË÷Òı£¬½Úµãä¯ÀÀÊ±Ê¹ÓÃ
+				// é‡ç½®è·¯çº¿èŠ‚ç‚¹ç´¢å¼•ï¼ŒèŠ‚ç‚¹æµè§ˆæ—¶ä½¿ç”¨
 				nodeIndex = 0;
 			}
 
 			public void onGetWalkingRouteResult(MKWalkingRouteResult res,
 					int error) {
-				// Æğµã»òÖÕµãÓĞÆçÒå£¬ĞèÒªÑ¡Ôñ¾ßÌåµÄ³ÇÊĞÁĞ±í»òµØÖ·ÁĞ±í
+				// èµ·ç‚¹æˆ–ç»ˆç‚¹æœ‰æ­§ä¹‰ï¼Œéœ€è¦é€‰æ‹©å…·ä½“çš„åŸå¸‚åˆ—è¡¨æˆ–åœ°å€åˆ—è¡¨
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
-					// ±éÀúËùÓĞµØÖ·
+					// éå†æ‰€æœ‰åœ°å€
 					ArrayList<MKPoiInfo> stPois = res.getAddrResult().mStartPoiList;
 					ArrayList<MKPoiInfo> enPois = res.getAddrResult().mEndPoiList;
 					ArrayList<MKCityListInfo> stCities = res.getAddrResult().mStartCityList;
@@ -308,7 +308,7 @@ public class MapFragment extends Fragment {
 					return;
 				}
 				if (error != 0 || res == null) {
-					Toast.makeText(getActivity(), "±§Ç¸£¬Î´ÕÒµ½½á¹û",
+					Toast.makeText(getActivity(), "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -318,23 +318,23 @@ public class MapFragment extends Fragment {
 				Toast.makeText(getActivity(),
 						String.valueOf(res.getPlan(0).getRoute(0)),
 						Toast.LENGTH_SHORT).show();
-				// ´Ë´¦½öÕ¹Ê¾Ò»¸ö·½°¸×÷ÎªÊ¾Àı
+				// æ­¤å¤„ä»…å±•ç¤ºä¸€ä¸ªæ–¹æ¡ˆä½œä¸ºç¤ºä¾‹
 				routeOverlay.setData(res.getPlan(0).getRoute(0));
-				// Çå³ıÆäËûÍ¼²ã
+				// æ¸…é™¤å…¶ä»–å›¾å±‚
 				mMapView.getOverlays().clear();
-				// Ìí¼ÓÂ·ÏßÍ¼²ã
+				// æ·»åŠ è·¯çº¿å›¾å±‚
 				mMapView.getOverlays().add(routeOverlay);
-				// Ö´ĞĞË¢ĞÂÊ¹ÉúĞ§
+				// æ‰§è¡Œåˆ·æ–°ä½¿ç”Ÿæ•ˆ
 				mMapView.refresh();
-				// Ê¹ÓÃzoomToSpan()ÕÀ·ÅµØÍ¼£¬Ê¹Â·ÏßÄÜÍêÈ«ÏÔÊ¾ÔÚµØÍ¼ÉÏ
+				// ä½¿ç”¨zoomToSpan()ç»½æ”¾åœ°å›¾ï¼Œä½¿è·¯çº¿èƒ½å®Œå…¨æ˜¾ç¤ºåœ¨åœ°å›¾ä¸Š
 				mMapView.getController().zoomToSpan(
 						routeOverlay.getLatSpanE6(),
 						routeOverlay.getLonSpanE6());
-				// ÒÆ¶¯µØÍ¼µ½Æğµã
+				// ç§»åŠ¨åœ°å›¾åˆ°èµ·ç‚¹
 				mMapView.getController().animateTo(res.getStart().pt);
-				// ½«Â·ÏßÊı¾İ±£´æ¸øÈ«¾Ö±äÁ¿
+				// å°†è·¯çº¿æ•°æ®ä¿å­˜ç»™å…¨å±€å˜é‡
 				route = res.getPlan(0).getRoute(0);
-				// ÖØÖÃÂ·Ïß½ÚµãË÷Òı£¬½Úµãä¯ÀÀÊ±Ê¹ÓÃ
+				// é‡ç½®è·¯çº¿èŠ‚ç‚¹ç´¢å¼•ï¼ŒèŠ‚ç‚¹æµè§ˆæ—¶ä½¿ç”¨
 				nodeIndex = -1;
 				//
 
@@ -366,7 +366,7 @@ public class MapFragment extends Fragment {
 			public void onGetAddrResult(MKAddrInfo res, int error) {
 				// TODO Auto-generated method stub
 				if (error != 0 || res == null) {
-					Toast.makeText(getActivity(), "±§Ç¸£¬Î´ÕÒµ½½á¹û",
+					Toast.makeText(getActivity(), "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -376,7 +376,7 @@ public class MapFragment extends Fragment {
 	}
 
 	void SearchButtonProcess(View v, int type) {
-		// ÖØÖÃä¯ÀÀ½ÚµãµÄÂ·ÏßÊı¾İ
+		// é‡ç½®æµè§ˆèŠ‚ç‚¹çš„è·¯çº¿æ•°æ®
 		route = null;
 		routeOverlay = null;
 		transitOverlay = null;
@@ -415,7 +415,7 @@ public class MapFragment extends Fragment {
 	}
 
 	/**
-	 * ½Úµãä¯ÀÀÊ¾Àı
+	 * èŠ‚ç‚¹æµè§ˆç¤ºä¾‹
 	 * 
 	 * @param v
 	 */
@@ -424,32 +424,32 @@ public class MapFragment extends Fragment {
 				R.layout.custom_text_view, null);
 		popupText = (TextView) viewCache.findViewById(R.id.textcache);
 		if (searchType == 0 || searchType == 2) {
-			// ¼İ³µ¡¢²½ĞĞÊ¹ÓÃµÄÊı¾İ½á¹¹ÏàÍ¬£¬Òò´ËÀàĞÍÎª¼İ³µ»ò²½ĞĞ£¬½Úµãä¯ÀÀ·½·¨ÏàÍ¬
+			// é©¾è½¦ã€æ­¥è¡Œä½¿ç”¨çš„æ•°æ®ç»“æ„ç›¸åŒï¼Œå› æ­¤ç±»å‹ä¸ºé©¾è½¦æˆ–æ­¥è¡Œï¼ŒèŠ‚ç‚¹æµè§ˆæ–¹æ³•ç›¸åŒ
 			if (nodeIndex < -1 || route == null
 					|| nodeIndex >= route.getNumSteps())
 				return;
 
-			// ÉÏÒ»¸ö½Úµã
+			// ä¸Šä¸€ä¸ªèŠ‚ç‚¹
 			if (mBtnPre.equals(v) && nodeIndex > 0) {
-				// Ë÷Òı¼õ
+				// ç´¢å¼•å‡
 				nodeIndex--;
-				// ÒÆ¶¯µ½Ö¸¶¨Ë÷ÒıµÄ×ø±ê
+				// ç§»åŠ¨åˆ°æŒ‡å®šç´¢å¼•çš„åæ ‡
 				mMapView.getController().animateTo(
 						route.getStep(nodeIndex).getPoint());
-				// µ¯³öÅİÅİ
+				// å¼¹å‡ºæ³¡æ³¡
 				popupText.setBackgroundResource(R.drawable.popup);
 				popupText.setText(route.getStep(nodeIndex).getContent());
 				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route
 						.getStep(nodeIndex).getPoint(), 5);
 			}
-			// ÏÂÒ»¸ö½Úµã
+			// ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
 			if (mBtnNext.equals(v) && nodeIndex < (route.getNumSteps() - 1)) {
-				// Ë÷Òı¼Ó
+				// ç´¢å¼•åŠ 
 				nodeIndex++;
-				// ÒÆ¶¯µ½Ö¸¶¨Ë÷ÒıµÄ×ø±ê
+				// ç§»åŠ¨åˆ°æŒ‡å®šç´¢å¼•çš„åæ ‡
 				mMapView.getController().animateTo(
 						route.getStep(nodeIndex).getPoint());
-				// µ¯³öÅİÅİ
+				// å¼¹å‡ºæ³¡æ³¡
 				popupText.setBackgroundResource(R.drawable.popup);
 				popupText.setText(route.getStep(nodeIndex).getContent());
 				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route
@@ -457,33 +457,33 @@ public class MapFragment extends Fragment {
 			}
 		}
 		if (searchType == 1) {
-			// ¹«½»»»³ËÊ¹ÓÃµÄÊı¾İ½á¹¹ÓëÆäËû²»Í¬£¬Òò´Ëµ¥¶À´¦Àí½Úµãä¯ÀÀ
+			// å…¬äº¤æ¢ä¹˜ä½¿ç”¨çš„æ•°æ®ç»“æ„ä¸å…¶ä»–ä¸åŒï¼Œå› æ­¤å•ç‹¬å¤„ç†èŠ‚ç‚¹æµè§ˆ
 			if (nodeIndex < -1 || transitOverlay == null
 					|| nodeIndex >= transitOverlay.getAllItem().size())
 				return;
 
-			// ÉÏÒ»¸ö½Úµã
+			// ä¸Šä¸€ä¸ªèŠ‚ç‚¹
 			if (mBtnPre.equals(v) && nodeIndex > 1) {
-				// Ë÷Òı¼õ
+				// ç´¢å¼•å‡
 				nodeIndex--;
-				// ÒÆ¶¯µ½Ö¸¶¨Ë÷ÒıµÄ×ø±ê
+				// ç§»åŠ¨åˆ°æŒ‡å®šç´¢å¼•çš„åæ ‡
 				mMapView.getController().animateTo(
 						transitOverlay.getItem(nodeIndex).getPoint());
-				// µ¯³öÅİÅİ
+				// å¼¹å‡ºæ³¡æ³¡
 				popupText.setBackgroundResource(R.drawable.popup);
 				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
 				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
 						transitOverlay.getItem(nodeIndex).getPoint(), 5);
 			}
-			// ÏÂÒ»¸ö½Úµã
+			// ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
 			if (mBtnNext.equals(v)
 					&& nodeIndex < (transitOverlay.getAllItem().size() - 2)) {
-				// Ë÷Òı¼Ó
+				// ç´¢å¼•åŠ 
 				nodeIndex++;
-				// ÒÆ¶¯µ½Ö¸¶¨Ë÷ÒıµÄ×ø±ê
+				// ç§»åŠ¨åˆ°æŒ‡å®šç´¢å¼•çš„åæ ‡
 				mMapView.getController().animateTo(
 						transitOverlay.getItem(nodeIndex).getPoint());
-				// µ¯³öÅİÅİ
+				// å¼¹å‡ºæ³¡æ³¡
 				popupText.setBackgroundResource(R.drawable.popup);
 				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
 				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
@@ -494,11 +494,11 @@ public class MapFragment extends Fragment {
 	}
 
 	/**
-	 * ´´½¨µ¯³öÅİÅİÍ¼²ã
+	 * åˆ›å»ºå¼¹å‡ºæ³¡æ³¡å›¾å±‚
 	 */
 	public void createPaopao() {
 
-		// ÅİÅİµã»÷ÏìÓ¦»Øµ÷
+		// æ³¡æ³¡ç‚¹å‡»å“åº”å›è°ƒ
 		PopupClickListener popListener = new PopupClickListener() {
 			@Override
 			public void onClickedPopup(int index) {
@@ -509,13 +509,13 @@ public class MapFragment extends Fragment {
 	}
 
 	/**
-	 * Ìø×ª×ÔÉèÂ·ÏßActivity
+	 * è·³è½¬è‡ªè®¾è·¯çº¿Activity
 	 * 
-	 * public void intentToActivity(){ //Ìø×ªµ½×ÔÉèÂ·ÏßÑİÊ¾demo Intent intent = new
+	 * public void intentToActivity(){ //è·³è½¬åˆ°è‡ªè®¾è·¯çº¿æ¼”ç¤ºdemo Intent intent = new
 	 * Intent(this, CustomRouteOverlayDemo.class); startActivity(intent); }
 	 */
 	/**
-	 * ÇĞ»»Â·ÏßÍ¼±ê£¬Ë¢ĞÂµØÍ¼Ê¹ÆäÉúĞ§ ×¢Òâ£º ÆğÖÕµãÍ¼±êÊ¹ÓÃÖĞĞÄ¶ÔÆë.
+	 * åˆ‡æ¢è·¯çº¿å›¾æ ‡ï¼Œåˆ·æ–°åœ°å›¾ä½¿å…¶ç”Ÿæ•ˆ æ³¨æ„ï¼š èµ·ç»ˆç‚¹å›¾æ ‡ä½¿ç”¨ä¸­å¿ƒå¯¹é½.
 	 * 
 	 * protected void changeRouteIcon() { // Button btn =
 	 * (Button)findViewById(R.id.customicon); if ( routeOverlay == null &&
@@ -523,7 +523,7 @@ public class MapFragment extends Fragment {
 	 * routeOverlay != null){ routeOverlay.setStMarker(null);
 	 * routeOverlay.setEnMarker(null); } if ( transitOverlay != null){
 	 * transitOverlay.setStMarker(null); transitOverlay.setEnMarker(null); }
-	 * btn.setText("×Ô¶¨ÒåÆğÖÕµãÍ¼±ê"); Toast.makeText(this, "½«Ê¹ÓÃÏµÍ³ÆğÖÕµãÍ¼±ê",
+	 * btn.setText("è‡ªå®šä¹‰èµ·ç»ˆç‚¹å›¾æ ‡"); Toast.makeText(this, "å°†ä½¿ç”¨ç³»ç»Ÿèµ·ç»ˆç‚¹å›¾æ ‡",
 	 * Toast.LENGTH_SHORT).show(); } else{ if ( routeOverlay != null){
 	 * routeOverlay.setStMarker(getResources().getDrawable(R.drawable.icon_st));
 	 * routeOverlay.setEnMarker(getResources().getDrawable(R.drawable.icon_en));
@@ -531,8 +531,8 @@ public class MapFragment extends Fragment {
 	 * transitOverlay.setStMarker(getResources().
 	 * getDrawable(R.drawable.icon_st));
 	 * transitOverlay.setEnMarker(getResources(
-	 * ).getDrawable(R.drawable.icon_en)); } btn.setText("ÏµÍ³ÆğÖÕµãÍ¼±ê");
-	 * Toast.makeText(this, "½«Ê¹ÓÃ×Ô¶¨ÒåÆğÖÕµãÍ¼±ê", Toast.LENGTH_SHORT).show(); }
+	 * ).getDrawable(R.drawable.icon_en)); } btn.setText("ç³»ç»Ÿèµ·ç»ˆç‚¹å›¾æ ‡");
+	 * Toast.makeText(this, "å°†ä½¿ç”¨è‡ªå®šä¹‰èµ·ç»ˆç‚¹å›¾æ ‡", Toast.LENGTH_SHORT).show(); }
 	 * useDefaultIcon = !useDefaultIcon; mMapView.refresh();
 	 * 
 	 * }

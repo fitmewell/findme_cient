@@ -59,7 +59,7 @@ public class register_fragment extends Fragment{
                 // TODO Auto-generated method stub
                 if (!hasFocus){
                     if(!isEmail(username.getText().toString())||username.getText() == null){
-                        Toast.makeText(getActivity(), "¸ñÊ½´íÎó" +!isEmail(username.getText().toString()), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "æ ¼å¼é”™è¯¯" +!isEmail(username.getText().toString()), Toast.LENGTH_SHORT).show();
                         registerInfoPass = false;
                         unameInfo.setTextColor(Color.RED);
                     }
@@ -79,7 +79,7 @@ public class register_fragment extends Fragment{
                 if (!hasFocus){
                     if (!isPassword(password.getText().toString()) || password.getText() == null){
                         registerInfoPass = false;
-                        Toast.makeText(getActivity(), "ÃÜÂë¸ñÊ½²»ÕıÈ·", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "å¯†ç æ ¼å¼ä¸æ­£ç¡®", Toast.LENGTH_SHORT).show();
                         passInfo.setTextColor(Color.RED);
                     }
                     else if (isPassword(password.getText().toString()) && password.getText() != null){
@@ -99,7 +99,7 @@ public class register_fragment extends Fragment{
                     if (!password.getText().toString().equals(repassword.getText().toString())){
                         registerInfoPass = false;
                         repassInfo.setTextColor(Color.RED);
-                        Toast.makeText(getActivity(), "Á½´ÎµÄÃÜÂë²»Ò»ÖÂ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "ä¸¤æ¬¡çš„å¯†ç ä¸ä¸€è‡´", Toast.LENGTH_SHORT).show();
                     }
                     else if (password.getText().toString().equals(repassword.getText().toString()) && !repassword.getText().toString().equals("")){
                         registerInfoPass = true;
@@ -118,7 +118,7 @@ public class register_fragment extends Fragment{
                     if (name.getText().toString().equals("")){
                         registerInfoPass = false;
                         nameInfo.setTextColor(Color.RED);
-                        Toast.makeText(getActivity(), "ÇëÊäÈëÓÃ»§Ãû", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "è¯·è¾“å…¥ç”¨æˆ·å", Toast.LENGTH_SHORT).show();
                     }
                     else if (!name.getText().toString().equals("")){
                         registerInfoPass = true;
@@ -152,7 +152,7 @@ public class register_fragment extends Fragment{
     }
     public static boolean isEmail(String strEmail) {
 
-        //ÕıÔò±í´ïÊ½È·¶¨ÓÊÏä¸ñÊ½
+        //æ­£åˆ™è¡¨è¾¾å¼ç¡®å®šé‚®ç®±æ ¼å¼
         String strPattern = "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
 
         Pattern p = Pattern.compile(strPattern);
@@ -162,7 +162,7 @@ public class register_fragment extends Fragment{
 
     public static boolean isPassword(String password_){
 
-        //ÕıÔò±í´ïÊ½È·¶¨ÃÜÂë¸ñÊ½
+        //æ­£åˆ™è¡¨è¾¾å¼ç¡®å®šå¯†ç æ ¼å¼
         String strPattern = "^[a-zA-Z]\\w{5,17}$";
         Pattern p = Pattern.compile(strPattern);
         Matcher m = p.matcher(password_);

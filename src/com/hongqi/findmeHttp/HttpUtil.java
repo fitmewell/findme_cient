@@ -23,29 +23,29 @@ public class HttpUtil {
 
 
     static String baseuri = "http://1.findmeweb.sinaapp.com/servlet/";
-    // »ù´¡URL
-    // »ñµÃGetÇëÇó¶ÔÏórequest
+    // åŸºç¡€URL
+    // è·å¾—Getè¯·æ±‚å¯¹è±¡request
     public static HttpGet getHttpGet(String url){
         HttpGet request = new HttpGet(url);
         return request;
     }
-    // »ñµÃPostÇëÇó¶ÔÏórequest
+    // è·å¾—Postè¯·æ±‚å¯¹è±¡request
     public static HttpPost getHttpPost(String url){
         HttpPost request = new HttpPost(url);
         return request;
     }
-    // ¸ù¾İÇëÇó»ñµÃÏìÓ¦¶ÔÏóresponse
+    // æ ¹æ®è¯·æ±‚è·å¾—å“åº”å¯¹è±¡response
     public static HttpResponse getHttpResponse(HttpGet request) throws ClientProtocolException, IOException{
         HttpResponse response = new DefaultHttpClient().execute(request);
         return response;
     }
-    // ¸ù¾İÇëÇó»ñµÃÏìÓ¦¶ÔÏóresponse
+    // æ ¹æ®è¯·æ±‚è·å¾—å“åº”å¯¹è±¡response
     public static HttpResponse getHttpResponse(HttpPost request) throws ClientProtocolException, IOException{
         HttpResponse response = new DefaultHttpClient().execute(request);
         return response;
     }
 
-    // ·¢ËÍPostÇëÇó£¬»ñµÃÏìÓ¦²éÑ¯½á¹û
+    // å‘é€Postè¯·æ±‚ï¼Œè·å¾—å“åº”æŸ¥è¯¢ç»“æœ
     public static String queryStringForPost(String username ,String pass){
 
         String url = baseuri +"logincheck";
@@ -53,7 +53,7 @@ public class HttpUtil {
         params.add(new BasicNameValuePair("u", username));
         params.add(new BasicNameValuePair("p", pass));
 
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
 
         try {
@@ -64,22 +64,22 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
-                //result=new  String(result.getBytes("8859_1"),"GB2312");  Õâ¾ä¿ÉÒª¿É²»Òª£¬ÒÔÄã²»³öÏÖÂÒÂëÎª×¼
+                //result=new  String(result.getBytes("8859_1"),"GB2312");  è¿™å¥å¯è¦å¯ä¸è¦ï¼Œä»¥ä½ ä¸å‡ºç°ä¹±ç ä¸ºå‡†
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;
@@ -91,7 +91,7 @@ public class HttpUtil {
         List <NameValuePair> params = new ArrayList <NameValuePair>();
         params.add(new BasicNameValuePair("u", username));
 
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
 
         try {
@@ -102,24 +102,24 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
-                //result=new  String(result.getBytes("8859_1"),"GB2312");  Õâ¾ä¿ÉÒª¿É²»Òª£¬ÒÔÄã²»³öÏÖÂÒÂëÎª×¼
+                //result=new  String(result.getBytes("8859_1"),"GB2312");  è¿™å¥å¯è¦å¯ä¸è¦ï¼Œä»¥ä½ ä¸å‡ºç°ä¹±ç ä¸ºå‡†
 
 
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;
@@ -134,7 +134,7 @@ public class HttpUtil {
         params.add(new BasicNameValuePair("localx", String.valueOf(localx)));
         params.add(new BasicNameValuePair("localy", String.valueOf(localy)));
 
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
 
         try {
@@ -145,21 +145,21 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;
@@ -171,7 +171,7 @@ public class HttpUtil {
         List <NameValuePair> params = new ArrayList <NameValuePair>();
         params.add(new BasicNameValuePair("u", uid));
 
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
         try {
             UrlEncodedFormEntity reqentity = new UrlEncodedFormEntity(params,HTTP.UTF_8);
@@ -182,24 +182,24 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
-                //result=new  String(result.getBytes("8859_1"),"GB2312");  Õâ¾ä¿ÉÒª¿É²»Òª£¬ÒÔÄã²»³öÏÖÂÒÂëÎª×¼
+                //result=new  String(result.getBytes("8859_1"),"GB2312");  è¿™å¥å¯è¦å¯ä¸è¦ï¼Œä»¥ä½ ä¸å‡ºç°ä¹±ç ä¸ºå‡†
 
 
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;
@@ -212,7 +212,7 @@ public class HttpUtil {
         params.add(new BasicNameValuePair("e", email));
         params.add(new BasicNameValuePair("name", name));
         params.add(new BasicNameValuePair("pass", password));
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
         try {
             UrlEncodedFormEntity reqentity = new UrlEncodedFormEntity(params,HTTP.UTF_8);
@@ -223,24 +223,24 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
-                //result=new  String(result.getBytes("8859_1"),"GB2312");  Õâ¾ä¿ÉÒª¿É²»Òª£¬ÒÔÄã²»³öÏÖÂÒÂëÎª×¼
+                //result=new  String(result.getBytes("8859_1"),"GB2312");  è¿™å¥å¯è¦å¯ä¸è¦ï¼Œä»¥ä½ ä¸å‡ºç°ä¹±ç ä¸ºå‡†
 
 
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;
@@ -253,7 +253,7 @@ public class HttpUtil {
         params.add(new BasicNameValuePair("uid", uid));
         params.add(new BasicNameValuePair("fid", fid));
 
-        // ¸ù¾İurl»ñµÃHttpPost¶ÔÏó
+        // æ ¹æ®urlè·å¾—HttpPostå¯¹è±¡
         HttpPost request = HttpUtil.getHttpPost(url);
 
         try {
@@ -264,24 +264,23 @@ public class HttpUtil {
         }
         String result = null;
         try {
-            // »ñµÃÏìÓ¦¶ÔÏó
+            // è·å¾—å“åº”å¯¹è±¡
             HttpResponse response = HttpUtil.getHttpResponse(request);
-            // ÅĞ¶ÏÊÇ·ñÇëÇó³É¹¦
+            // åˆ¤æ–­æ˜¯å¦è¯·æ±‚æˆåŠŸ
             if(response.getStatusLine().getStatusCode()==200){
-                // »ñµÃÏìÓ¦
+                // è·å¾—å“åº”
                 result = EntityUtils.toString(response.getEntity());
-                //result=new  String(result.getBytes("8859_1"),"GB2312");  Õâ¾ä¿ÉÒª¿É²»Òª£¬ÒÔÄã²»³öÏÖÂÒÂëÎª×¼
 
 
                 return result;
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         } catch (IOException e) {
             e.printStackTrace();
-            result = "ÍøÂçÒì³££¡";
+            result = "ç½‘ç»œå¼‚å¸¸ï¼";
             return result;
         }
         return null;

@@ -26,17 +26,17 @@ public class getFriendList {
                 i++;
             }
             i++;
-            while(i < a.length && a[i] != '|')	{
+            while(i < a.length && a[i] != '|')  {
                 online += a[i];
                 i++;
             }
             i++;
             System.out.println(online);
             if (online.equals("true")){
-                online = "ÔÚÏß";
+                online = "åœ¨çº¿";
             }
             else if (online.equals("false")){
-                online = "ÀëÏß";
+                online = "ç¦»çº¿";
             }
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uid", uid);
@@ -58,7 +58,7 @@ public class getFriendList {
             i++;
         }
         i++;
-        while(i < a.length)	{
+        while(i < a.length) {
             Friendlocaly += a[i];
             i++;
         }
