@@ -149,7 +149,6 @@ public class MapFragment extends Fragment {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setVisibility(View.VISIBLE);
-
 		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
@@ -373,6 +372,7 @@ public class MapFragment extends Fragment {
 				city = res.addressComponents.city.toString();
 			}
 		});
+		spinner.performClick();
 	}
 
 	void SearchButtonProcess(View v, int type) {
@@ -589,7 +589,7 @@ public class MapFragment extends Fragment {
 			stNode.pt = stGeoPoint;
 			edNode.pt = edGeoPoint;
 			mSearch.reverseGeocode(edNode.pt);
-
+			mapController.animateTo(stNode.pt);
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {

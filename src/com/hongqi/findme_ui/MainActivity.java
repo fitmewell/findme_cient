@@ -1,10 +1,23 @@
 package com.hongqi.findme_ui;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Text;
 
 import com.hongqi.findme_ui.friendlist_fragment.ShowTheWay;
@@ -19,7 +32,9 @@ import android.content.SharedPreferences;
 import android.content.pm.FeatureInfo;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,7 +54,7 @@ import android.os.Build;
 
 public class MainActivity extends Activity implements onLoginSuccessListener,
 		ShowTheWay {
-	String username, uid;
+	String username = null, uid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +74,7 @@ public class MainActivity extends Activity implements onLoginSuccessListener,
 
 	@Override
 	public void onLoginSuccess(String ui, String uname) {
-
+		username = uname;
 		// TODO Auto-generated method stub
 		Toast.makeText(this, ui + "Success" + uname, Toast.LENGTH_LONG).show();
 		friendlist_fragment friendlist = new friendlist_fragment();
@@ -84,6 +99,7 @@ public class MainActivity extends Activity implements onLoginSuccessListener,
 			this.setTitle("");
 			break;
 		case R.id.quit_user:
+			logOut();
 			SharedPreferences sp = getSharedPreferences("UserInfo",
 					Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = sp.edit();
@@ -93,6 +109,7 @@ public class MainActivity extends Activity implements onLoginSuccessListener,
 					.replace(R.id.active_main, new login_fragment()).commit();
 			break;
 		case R.id.quit_program:
+			logOut();
 			android.os.Process.killProcess(android.os.Process.myPid());
 			break;
 		default:
@@ -107,7 +124,7 @@ public class MainActivity extends Activity implements onLoginSuccessListener,
 			TextView title = (TextView) findViewById(R.id.title);
 			String titleTXT = title.getText().toString();
 			if (titleTXT.equals("设置") || titleTXT.equals("注册")
-					|| titleTXT.equals("登录") || titleTXT.equals("����")) {
+					|| titleTXT.equals("登录") || titleTXT.equals("地图")) {
 				return super.onKeyDown(keyCode, event);
 			} else {
 				moveTaskToBack(true);
@@ -126,5 +143,31 @@ public class MainActivity extends Activity implements onLoginSuccessListener,
 		getFragmentManager().beginTransaction().addToBackStack(null)
 				.setCustomAnimations(R.animator.flash_in, R.animator.flash_out)
 				.replace(R.id.active_main, mapFragment).commit();
+	}
+
+	private void logOut() {
+		if (username != null) {
+			HttpClient client = new DefaultHttpClient();
+			HttpConnectionParams
+					.setConnectionTimeout(client.getParams(), 10000);
+			HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
+
+			HttpPost post = new HttpPost(
+					"http://findmeweb.sinaapp.com/servlet/logout");
+			List<NameValuePair> list = new ArrayList<>();
+			list.add(new BasicNameValuePair("u", username));
+			try {
+				post.setEntity(new UrlEncodedFormEntity(list));
+				HttpResponse response = client.execute(post);
+
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			return;
+		}
 	}
 }
